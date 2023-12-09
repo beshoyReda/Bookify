@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Book.Web.Core.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Book.Web.Data
@@ -9,5 +10,6 @@ namespace Book.Web.Data
             : base(options)
         {
         }
+        public DbSet<Category> Categories { get; set; }
     }
 }

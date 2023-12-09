@@ -1,4 +1,4 @@
-﻿using Book.Web.Models;
+﻿using Book.Web.Core.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
