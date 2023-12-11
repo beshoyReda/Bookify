@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Book.Web.Core.Models;
+using Bookify.Web.Filters;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 namespace Book.Web.Controllers
 {
@@ -17,28 +19,30 @@ namespace Book.Web.Controllers
             var categories = _context.Categories.AsNoTracking().ToList();
             return View(categories);
         }
+        [HttpGet]
+        [AjaxOnly]
         public IActionResult Create()
         {
 
-            return View("Form");
+            return PartialView("_Form");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(CategoryFormViewModel model)
         {
             if (!ModelState.IsValid)
-                return View("Form", model);
-            if (ModelState.IsValid)
-            {
+                return BadRequest();
+       
+            
                 var category = new Category { Name = model.Name };
                 _context.Categories.Add(category);
                 _context.SaveChanges();
-
-                TempData["Message"] = "Saved Successfully";
-            }
-            return RedirectToAction(nameof(Index));
+                return PartialView("_CategoryRow", category);
+            
+            
         }
         [HttpGet]
+        [AjaxOnly]
         public IActionResult Edit(int id)
         {
             var category = _context.Categories.Find(id);
@@ -52,7 +56,7 @@ namespace Book.Web.Controllers
                 Name = category.Name
             };
 
-            return View("Form", viewModel);
+            return PartialView("_Form", viewModel);
         }
 
         [HttpPost]
@@ -60,7 +64,7 @@ namespace Book.Web.Controllers
         public IActionResult Edit(CategoryFormViewModel model)
         {
             if (!ModelState.IsValid)
-                return View("Form", model);
+                return BadRequest();
 
             var category = _context.Categories.Find(model.CategoryId);
 
@@ -72,10 +76,10 @@ namespace Book.Web.Controllers
 
             _context.SaveChanges();
             
-            TempData["Message"] = "Saved Successfully";
+            
 
 
-            return RedirectToAction(nameof(Index));
+            return PartialView("_CategoryRow", category);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

@@ -7,6 +7,7 @@ namespace Bookify.Web.Helpers
     [HtmlTargetElement("a", Attributes = "active-when")]
     public class ActiveTag : TagHelper
     {
+        //lazm esm el property deh ykon zy esm el attribute el fow lakn ykon mktob bl pascalcase
         public string? ActiveWhen { get; set; }
 
         [ViewContext]
@@ -19,7 +20,7 @@ namespace Bookify.Web.Helpers
                 return;
 
             var currentController = ViewContextData?.RouteData.Values["controller"]?.ToString();
-
+            //! mean eny 3omra ma htkon null
             if (currentController!.Equals(ActiveWhen))
             {
                 if (output.Attributes.ContainsName("class"))
