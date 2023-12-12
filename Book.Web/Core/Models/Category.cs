@@ -1,5 +1,8 @@
-﻿namespace Book.Web.Core.Models
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Book.Web.Core.Models
 {
+	[Index(nameof(Name),IsUnique =true)]
 	public class Category
 	{
         public int CategoryId { get; set; }

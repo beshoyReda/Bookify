@@ -1,23 +1,22 @@
-﻿using Book.Web.Core.Models;
-using Bookify.Web.Filters;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-namespace Book.Web.Controllers
+﻿namespace Book.Web.Controllers
 {
     public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public CategoriesController(ApplicationDbContext context)
+        public CategoriesController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
         {
-            //TODO: use viewModel
             var categories = _context.Categories.AsNoTracking().ToList();
-            return View(categories);
+            var viewModel = _mapper.Map<IEnumerable<CategoryViewModel>>(categories);
+
+            return View(viewModel);
         }
         [HttpGet]
         [AjaxOnly]
@@ -32,14 +31,16 @@ namespace Book.Web.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest();
-       
-            
-                var category = new Category { Name = model.Name };
-                _context.Categories.Add(category);
-                _context.SaveChanges();
-                return PartialView("_CategoryRow", category);
-            
-            
+
+            var category = _mapper.Map<Category>(model);
+            _context.Add(category);
+            _context.SaveChanges();
+
+            var viewModel = _mapper.Map<CategoryViewModel>(category);
+
+            return PartialView("_CategoryRow", viewModel);
+
+
         }
         [HttpGet]
         [AjaxOnly]
@@ -50,11 +51,7 @@ namespace Book.Web.Controllers
             if (category is null)
                 return NotFound();
 
-            var viewModel = new CategoryFormViewModel
-            {
-                CategoryId = id,
-                Name = category.Name
-            };
+            var viewModel = _mapper.Map<CategoryFormViewModel>(category);
 
             return PartialView("_Form", viewModel);
         }
@@ -71,15 +68,14 @@ namespace Book.Web.Controllers
             if (category is null)
                 return NotFound();
 
-            category.Name = model.Name;
+            category = _mapper.Map(model, category);
             category.LastUpdatedOn = DateTime.Now;
 
             _context.SaveChanges();
-            
-            
 
+            var viewModel = _mapper.Map<CategoryViewModel>(category);
 
-            return PartialView("_CategoryRow", category);
+            return PartialView("_CategoryRow", viewModel);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -95,9 +91,18 @@ namespace Book.Web.Controllers
             //    category.IsDeleted = true;
             category.IsDeleted = !category.IsDeleted;
             category.LastUpdatedOn = DateTime.Now;
+           
             _context.SaveChanges();
+            
             return Ok(category.LastUpdatedOn.ToString());
 
+        }
+        public IActionResult AllowItem(CategoryFormViewModel model)
+        {
+            var category = _context.Categories.SingleOrDefault(c => c.Name == model.Name);
+            var isAllowed = category is null || category.CategoryId.Equals(model.CategoryId);
+
+            return Json(isAllowed);
         }
     }
 }
