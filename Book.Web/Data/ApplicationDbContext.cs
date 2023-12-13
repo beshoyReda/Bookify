@@ -1,6 +1,5 @@
-﻿using Book.Web.Core.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
 
 namespace Book.Web.Data
 {
@@ -10,6 +9,7 @@ namespace Book.Web.Data
             : base(options)
         {
         }
+        public DbSet<Author> Authors { get; set; }
         public DbSet<Category> Categories { get; set; }
     }
 }

@@ -1,6 +1,4 @@
-﻿using Book.Web.Core.ViewModels;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace Book.Web.Controllers
 {

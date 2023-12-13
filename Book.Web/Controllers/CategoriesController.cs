@@ -91,9 +91,9 @@
             //    category.IsDeleted = true;
             category.IsDeleted = !category.IsDeleted;
             category.LastUpdatedOn = DateTime.Now;
-           
+
             _context.SaveChanges();
-            
+
             return Ok(category.LastUpdatedOn.ToString());
 
         }

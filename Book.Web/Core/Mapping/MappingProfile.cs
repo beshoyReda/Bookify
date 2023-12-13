@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-
-namespace Book.Web.Core.Mapping
+﻿namespace Book.Web.Core.Mapping
 {
     public class MappingProfile : Profile
     {
@@ -10,6 +8,9 @@ namespace Book.Web.Core.Mapping
             CreateMap<Category, CategoryViewModel>();
             CreateMap<CategoryFormViewModel, Category>().ReverseMap();
 
+            //Author
+            CreateMap<Author, AuthorViewModel>();
+            CreateMap<AuthorFormViewModel, Author>().ReverseMap();
         }
     }
 }
