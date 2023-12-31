@@ -2,6 +2,7 @@
 
 namespace Book.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -15,7 +16,7 @@ namespace Book.Web.Controllers
         {
             return View();
         }
-
+        
         public IActionResult Privacy()
         {
             return View();

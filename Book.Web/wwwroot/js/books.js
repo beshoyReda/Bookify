@@ -32,16 +32,16 @@
                 "className": "d-flex align-items-center",
                 "render": function (data, type, row) {
                     return `<div class="symbol symbol-50px overflow-hidden me-3">
-                                                <a href="/Books/Details/${row.bookId}">
-                                                    <div class="symbol-label h-70px">
-                                                        <img src="${(row.imageThumbnailUrl === null ? '/images/books/no-book.jpg' : row.imageThumbnailUrl)}" alt="cover" class="w-100">
-                                                    </div>
-                                                </a>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <a href="/Books/Details/${row.bookId}" class="text-primary fw-bolder mb-1">${row.title}</a>
-                                                <span>${row.author}</span>
-                                            </div>`;
+                        <a href="/Books/Details/${row.bookId}">
+                            <div class="symbol-label h-70px">
+                                <img src="${(row.imageThumbnailUrl === null ? '/images/books/no-book.jpg' : row.imageThumbnailUrl)}" alt="cover" class="w-100">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <a href="/Books/Details/${row.bookId}" class="text-primary fw-bolder mb-1">${row.title}</a>
+                        <span>${row.author}</span>
+                    </div>`;
                 }
             },
             { "data": "publisher", "name": "Publisher" },
@@ -57,16 +57,16 @@
                 "name": "IsAvailableForRental",
                 "render": function (data, type, row) {
                     return `<span class="badge badge-light-${(row.isAvailableForRental ? 'success' : 'warning')}">
-                                                ${(row.isAvailableForRental ? 'Available' : 'Not Available')}
-                                            </span>`;
+                                ${(row.isAvailableForRental ? 'Available' : 'Not Available')}
+                            </span>`;
                 }
             },
             {
                 "name": "IsDeleted",
                 "render": function (data, type, row) {
                     return `<span class="badge badge-light-${(row.isDeleted ? 'danger' : 'success')} js-status">
-                                                ${(row.isDeleted ? 'Deleted' : 'Available')}
-                                            </span>`;
+                                ${(row.isDeleted ? 'Deleted' : 'Available')}
+                            </span>`;
                 }
             },
             {
