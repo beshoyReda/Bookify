@@ -66,7 +66,7 @@ namespace Book.Web.Controllers
                 books = books.Where(b => b.Title.Contains(searchValue) || b.Author!.Name.Contains(searchValue));
             }
 
-            books = books.OrderBy($"{sortColumn} {sortColumnDirection}");
+            books = books.OrderBy( $"{sortColumn} {sortColumnDirection}");
 
             var data = books.Skip(skip).Take(pageSize).ToList();
             
